@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://indian-wedding-budget.vercel.app/sitemap.xml

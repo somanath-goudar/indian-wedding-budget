@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indian Wedding Budget Planner — Region-wise Cost Calculator 2025</title>
+<meta name="description" content="Plan your Indian wedding budget with real regional cost benchmarks. Set guest count, select ceremonies, and get a live breakdown for North, South, West, and East India weddings.">
+<link rel="canonical" href="https://indian-wedding-budget.vercel.app/">
+<meta property="og:title" content="Indian Wedding Budget Planner — Region-wise Cost Calculator 2025">
+<meta property="og:description" content="Plan your Indian wedding budget with real regional cost benchmarks for North, South, West & East India.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://indian-wedding-budget.vercel.app/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Indian Wedding Budget Planner 2025">
+<meta name="twitter:description" content="Plan your Indian wedding budget with real regional cost benchmarks. Free, instant, no signup.">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Indian Wedding Budget Planner",
+  "url": "https://indian-wedding-budget.vercel.app/",
+  "description": "Free Indian wedding budget calculator with region-wise cost benchmarks, ceremony checklist, per-category sliders, live donut chart, PDF export, and shareable link.",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://indian-wedding-budget.vercel.app/" },
+    { "@type": "ListItem", "position": 2, "name": "Wedding Budget Planner", "item": "https://indian-wedding-budget.vercel.app/" }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How much does an Indian wedding cost in 2025?",
+      "acceptedAnswer": { "@type": "Answer", "text": "The average Indian wedding cost in 2025 ranges from ₹5 lakhs for a small intimate ceremony to ₹1 crore+ for a large destination wedding. North Indian weddings average ₹15–50 lakhs, South Indian ₹8–25 lakhs, West Indian ₹10–35 lakhs, and East Indian ₹6–20 lakhs for 200–500 guests." }
+    },
+    {
+      "@type": "Question",
+      "name": "What are the main expenses in an Indian wedding?",
+      "acceptedAnswer": { "@type": "Answer", "text": "The biggest Indian wedding expenses are: Catering (30–40% of budget), Venue (15–25%), Decoration (10–15%), Photography & Video (8–12%), Jewellery (varies widely), Bridal wear, Groom wear, DJ/Band, Pandit fees, Invitation cards, Transport, and Honeymoon." }
+    },
+    {
+      "@type": "Question",
+      "name": "How much does catering cost per person for an Indian wedding?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Indian wedding catering costs per head vary by region: North India ₹800–2,500/head, South India ₹500–1,500/head, West India ₹700–2,000/head, East India ₹400–1,200/head. A vegetarian menu costs less; multi-cuisine live counters cost more." }
+    },
+    {
+      "@type": "Question",
+      "name": "How can I reduce my Indian wedding budget?",
+      "acceptedAnswer": { "@type": "Answer", "text": "To save on Indian wedding costs: limit guest count (catering is your biggest expense), choose a weekday or off-peak date (20–30% venue discount), combine ceremonies into fewer days, opt for a local venue over a resort, hire a single multi-talented photographer instead of separate photo+video teams, and use digital invitations." }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference in wedding costs between North and South India?",
+      "acceptedAnswer": { "@type": "Answer", "text": "North Indian weddings (Punjab, Delhi, UP, Rajasthan) tend to cost more overall due to larger guest lists (500–2000+), multi-day ceremonies (baraat, haldi, mehendi, sangeet, pheras), and heavy decoration expectations. South Indian weddings are generally simpler in ceremony but can involve significant gold jewellery expenditure. A comparable 400-guest wedding might cost ₹30–60L in North India vs ₹15–30L in South India." }
+    }
+  ]
+}
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+:root {
+  --primary: #8B1A4A;
+  --primary-light: #B5275D;
+  --gold: #C9912A;
+  --gold-light: #F0C060;
+  --bg: #FFF8F0;
+  --card: #FFFFFF;
+  --border: #F0DCE8;
+  --text: #1A1A2E;
+  --muted: #6B5B6E;
+  --green: #2E7D52;
+  --shadow: 0 2px 16px rgba(139,26,74,0.08);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+/* NAV */
+nav { background: var(--primary); color: #fff; padding: 0.6rem 1.5rem; font-size: 0.8rem; }
+nav a { color: #FFD6E8; text-decoration: none; }
+nav a:hover { color: #fff; }
+nav span { color: #FFD6E8; margin: 0 0.4rem; }
+
+/* HERO */
+.hero { background: linear-gradient(135deg, var(--primary) 0%, #5A0A2E 100%); color: #fff; padding: 3rem 1.5rem 2.5rem; text-align: center; }
+.hero h1 { font-size: clamp(1.7rem, 4vw, 2.4rem); font-weight: 800; line-height: 1.2; margin-bottom: 0.8rem; }
+.hero h1 span { color: var(--gold-light); }
+.hero p { font-size: 1.05rem; opacity: 0.9; max-width: 600px; margin: 0 auto 1.5rem; }
+.hero-badges { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+.badge { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); border-radius: 20px; padding: 0.3rem 0.9rem; font-size: 0.82rem; }
+
+/* MAIN LAYOUT */
+.main { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+/* CARDS */
+.card { background: var(--card); border-radius: 16px; box-shadow: var(--shadow); padding: 1.75rem; margin-bottom: 1.5rem; border: 1px solid var(--border); }
+.card-title { font-size: 1.15rem; font-weight: 700; color: var(--primary); margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem; }
+.card-title .step { background: var(--primary); color: #fff; width: 26px; height: 26px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; }
+
+/* REGION SELECTOR */
+.region-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; margin-bottom: 1.5rem; }
+.region-btn { padding: 0.9rem 0.5rem; border: 2px solid var(--border); border-radius: 12px; background: #fff; cursor: pointer; text-align: center; transition: all 0.2s; font-size: 0.85rem; }
+.region-btn .flag { font-size: 1.6rem; display: block; margin-bottom: 0.25rem; }
+.region-btn .name { font-weight: 600; color: var(--text); font-size: 0.82rem; }
+.region-btn .states { font-size: 0.72rem; color: var(--muted); margin-top: 0.1rem; }
+.region-btn:hover { border-color: var(--primary-light); }
+.region-btn.active { border-color: var(--primary); background: #FFF0F6; }
+
+/* GUEST SLIDER */
+.guest-row { display: flex; align-items: center; gap: 1rem; }
+.guest-label { font-weight: 600; font-size: 0.95rem; min-width: 90px; }
+.guest-value { font-size: 1.5rem; font-weight: 800; color: var(--primary); min-width: 80px; text-align: right; }
+input[type="range"] { -webkit-appearance: none; width: 100%; height: 6px; border-radius: 3px; background: var(--border); outline: none; cursor: pointer; flex: 1; }
+input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: var(--primary); cursor: pointer; box-shadow: 0 2px 6px rgba(139,26,74,0.3); }
+input[type="range"]::-moz-range-thumb { width: 20px; height: 20px; border-radius: 50%; background: var(--primary); cursor: pointer; border: none; }
+
+/* CEREMONIES */
+.ceremony-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.6rem; }
+.ceremony-item { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 0.75rem; border: 2px solid var(--border); border-radius: 10px; cursor: pointer; transition: all 0.15s; user-select: none; }
+.ceremony-item input[type="checkbox"] { accent-color: var(--primary); width: 16px; height: 16px; cursor: pointer; flex-shrink: 0; }
+.ceremony-item label { cursor: pointer; font-size: 0.85rem; font-weight: 500; }
+.ceremony-item .cer-icon { font-size: 1.1rem; }
+.ceremony-item.checked { border-color: var(--primary); background: #FFF0F6; }
+
+/* BUDGET SLIDERS */
+.cat-row { margin-bottom: 1.4rem; padding-bottom: 1.4rem; border-bottom: 1px solid #F5E8F0; }
+.cat-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.cat-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; }
+.cat-name { font-weight: 600; font-size: 0.95rem; display: flex; align-items: center; gap: 0.4rem; }
+.cat-icon { font-size: 1.1rem; }
+.cat-amount { font-size: 1.1rem; font-weight: 700; color: var(--primary); }
+.cat-bench { font-size: 0.75rem; color: var(--muted); margin-top: 0.35rem; }
+.cat-bench span { color: var(--gold); font-weight: 600; }
+.cat-slider { width: 100%; margin-top: 0.5rem; }
+
+/* TOTAL BAR */
+.total-bar { background: linear-gradient(135deg, var(--primary), #5A0A2E); color: #fff; border-radius: 16px; padding: 1.5rem 1.75rem; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; box-shadow: 0 4px 20px rgba(139,26,74,0.25); }
+.total-label { font-size: 1rem; opacity: 0.85; }
+.total-amount { font-size: 2rem; font-weight: 900; letter-spacing: -0.5px; }
+.total-sub { font-size: 0.8rem; opacity: 0.75; margin-top: 0.1rem; }
+
+/* CHART + COMPARE */
+.results-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+@media (max-width: 640px) { .results-grid { grid-template-columns: 1fr; } }
+.chart-wrap { position: relative; max-width: 260px; margin: 0 auto; }
+.chart-legend { margin-top: 1rem; display: flex; flex-direction: column; gap: 0.4rem; max-height: 220px; overflow-y: auto; padding-right: 0.25rem; }
+.legend-row { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; }
+.legend-dot { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+.legend-name { flex: 1; color: var(--text); }
+.legend-pct { font-weight: 600; color: var(--muted); }
+
+/* COMPARE TABLE */
+.compare-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+.compare-table th { text-align: left; padding: 0.5rem 0.4rem; color: var(--muted); font-weight: 600; border-bottom: 2px solid var(--border); font-size: 0.78rem; }
+.compare-table td { padding: 0.45rem 0.4rem; border-bottom: 1px solid #F5E8F0; vertical-align: middle; }
+.compare-table tr:last-child td { border-bottom: none; font-weight: 700; background: #FFF0F6; }
+.diff-chip { font-size: 0.7rem; padding: 0.15rem 0.45rem; border-radius: 8px; font-weight: 600; }
+.diff-over { background: #FDECEA; color: #C62828; }
+.diff-under { background: #E8F5E9; color: #2E7D52; }
+.diff-on { background: #FFF3E0; color: #E65100; }
+
+/* BUTTONS */
+.btn-row { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.btn { padding: 0.75rem 1.4rem; border-radius: 10px; font-size: 0.9rem; font-weight: 600; cursor: pointer; border: none; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.4rem; }
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary:hover { background: var(--primary-light); }
+.btn-gold { background: var(--gold); color: #fff; }
+.btn-gold:hover { background: #B07D20; }
+.btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
+.btn-outline:hover { background: #FFF0F6; }
+.share-url { width: 100%; padding: 0.6rem 0.85rem; border: 2px solid var(--border); border-radius: 8px; font-size: 0.82rem; color: var(--muted); margin-top: 0.75rem; font-family: monospace; cursor: text; }
+
+/* HOW IT WORKS */
+.how-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; }
+.how-item { text-align: center; padding: 1.25rem 1rem; border: 1px solid var(--border); border-radius: 12px; background: #FFFAFD; }
+.how-num { width: 38px; height: 38px; background: var(--primary); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1rem; margin: 0 auto 0.6rem; }
+.how-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 0.35rem; }
+.how-desc { font-size: 0.8rem; color: var(--muted); }
+
+/* FAQ */
+.faq-item { border-bottom: 1px solid var(--border); }
+.faq-q { width: 100%; text-align: left; background: none; border: none; padding: 1rem 0; font-size: 0.95rem; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; color: var(--text); }
+.faq-q::after { content: '+'; font-size: 1.3rem; color: var(--primary); }
+.faq-q.open::after { content: '−'; }
+.faq-a { display: none; padding: 0 0 1rem; font-size: 0.88rem; color: var(--muted); line-height: 1.7; }
+.faq-a.open { display: block; }
+
+/* FOOTER */
+footer { background: #1A1A2E; color: #aaa; text-align: center; padding: 1.5rem; font-size: 0.82rem; }
+footer a { color: #ccc; text-decoration: none; margin: 0 0.5rem; }
+footer a:hover { color: #fff; }
+
+@media (max-width: 600px) {
+  .region-grid { grid-template-columns: repeat(2, 1fr); }
+  .total-bar { flex-direction: column; align-items: flex-start; }
+  .total-amount { font-size: 1.6rem; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/">Home</a><span>›</span><strong>Indian Wedding Budget Planner</strong>
+</nav>
+
+<div class="hero">
+  <h1>Indian Wedding <span>Budget Planner</span></h1>
+  <p>Plan your wedding budget with real regional cost benchmarks. Get a live breakdown, compare with averages, export PDF, and share with family.</p>
+  <div class="hero-badges">
+    <span class="badge">🇮🇳 India-specific data</span>
+    <span class="badge">📊 Live donut chart</span>
+    <span class="badge">📄 PDF export</span>
+    <span class="badge">🔗 Share link</span>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- STEP 1 -->
+  <div class="card">
+    <div class="card-title"><span class="step">1</span> Wedding Details</div>
+
+    <p style="font-size:0.85rem;color:var(--muted);margin-bottom:0.85rem;">Select your region — costs and benchmarks will update automatically.</p>
+    <div class="region-grid">
+      <button class="region-btn active" data-region="north" onclick="setRegion('north',this)">
+        <span class="flag">🏛️</span>
+        <div class="name">North India</div>
+        <div class="states">Delhi, Punjab, UP, Raj</div>
+      </button>
+      <button class="region-btn" data-region="south" onclick="setRegion('south',this)">
+        <span class="flag">🌴</span>
+        <div class="name">South India</div>
+        <div class="states">TN, Kerala, AP, KA</div>
+      </button>
+      <button class="region-btn" data-region="west" onclick="setRegion('west',this)">
+        <span class="flag">🏙️</span>
+        <div class="name">West India</div>
+        <div class="states">MH, GJ, Rajasthan</div>
+      </button>
+      <button class="region-btn" data-region="east" onclick="setRegion('east',this)">
+        <span class="flag">🌊</span>
+        <div class="name">East India</div>
+        <div class="states">WB, Odisha, Assam</div>
+      </button>
+    </div>
+
+    <div class="guest-row">
+      <span class="guest-label">Guests</span>
+      <input type="range" id="guestSlider" min="50" max="2000" step="50" value="300" oninput="onGuestChange(this.value)">
+      <span class="guest-value" id="guestDisplay">300</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;font-size:0.75rem;color:var(--muted);margin-top:0.25rem;">
+      <span>50 guests</span><span>2,000 guests</span>
+    </div>
+
+    <div style="margin-top:1.5rem;">
+      <div style="font-size:0.85rem;font-weight:600;margin-bottom:0.6rem;color:var(--muted);">Which ceremonies are you planning?</div>
+      <div class="ceremony-grid" id="ceremonyGrid">
+        <label class="ceremony-item checked"><input type="checkbox" checked onchange="toggleCeremony(this)"><span class="cer-icon">💅</span><span>Mehendi</span></label>
+        <label class="ceremony-item checked"><input type="checkbox" checked onchange="toggleCeremony(this)"><span class="cer-icon">🎶</span><span>Sangeet</span></label>
+        <label class="ceremony-item checked"><input type="checkbox" checked onchange="toggleCeremony(this)"><span class="cer-icon">💛</span><span>Haldi</span></label>
+        <label class="ceremony-item checked"><input type="checkbox" checked onchange="toggleCeremony(this)"><span class="cer-icon">🐴</span><span>Baraat</span></label>
+        <label class="ceremony-item checked"><input type="checkbox" checked onchange="toggleCeremony(this)"><span class="cer-icon">🔥</span><span>Pheras</span></label>
+        <label class="ceremony-item checked"><input type="checkbox" checked onchange="toggleCeremony(this)"><span class="cer-icon">🎉</span><span>Reception</span></label>
+        <label class="ceremony-item"><input type="checkbox" onchange="toggleCeremony(this)"><span class="cer-icon">👋</span><span>Bidaai</span></label>
+        <label class="ceremony-item"><input type="checkbox" onchange="toggleCeremony(this)"><span class="cer-icon">🤝</span><span>Engagement</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="card">
+    <div class="card-title"><span class="step">2</span> Budget by Category</div>
+    <p style="font-size:0.83rem;color:var(--muted);margin-bottom:1.2rem;">Drag sliders to set your planned spend. <strong>Avg</strong> = regional benchmark for your guest count.</p>
+    <div id="categorySliders"></div>
+  </div>
+
+  <!-- TOTAL -->
+  <div class="total-bar">
+    <div>
+      <div class="total-label">Total Wedding Budget</div>
+      <div class="total-amount" id="totalDisplay">₹0</div>
+      <div class="total-sub" id="totalSub">0 categories allocated</div>
+    </div>
+    <div style="text-align:right;">
+      <div style="font-size:0.85rem;opacity:0.8;">Regional benchmark</div>
+      <div style="font-size:1.4rem;font-weight:800;color:var(--gold-light);" id="benchTotal">₹0</div>
+      <div style="font-size:0.75rem;opacity:0.7;" id="benchDiff"></div>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="card">
+    <div class="card-title"><span class="step">3</span> Budget Breakdown</div>
+    <div class="results-grid">
+      <div>
+        <div class="chart-wrap"><canvas id="donutChart"></canvas></div>
+        <div class="chart-legend" id="chartLegend"></div>
+      </div>
+      <div>
+        <table class="compare-table">
+          <thead>
+            <tr><th>Category</th><th>Your Budget</th><th>Avg</th><th></th></tr>
+          </thead>
+          <tbody id="compareBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXPORT -->
+  <div class="card">
+    <div class="card-title"><span class="step">4</span> Save & Share</div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="exportPDF()">📄 Export PDF</button>
+      <button class="btn btn-gold" onclick="generateShareLink()">🔗 Copy Share Link</button>
+      <button class="btn btn-outline" onclick="resetAll()">↺ Reset</button>
+    </div>
+    <input type="text" class="share-url" id="shareUrl" readonly placeholder="Click 'Copy Share Link' to generate…" onclick="this.select()">
+    <p style="font-size:0.78rem;color:var(--muted);margin-top:0.6rem;">Share this link with your family — they'll see your exact budget plan.</p>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="card">
+    <div class="card-title">How It Works</div>
+    <div class="how-grid">
+      <div class="how-item"><div class="how-num">1</div><div class="how-title">Pick Your Region</div><div class="how-desc">North, South, West, or East India — costs differ significantly by region.</div></div>
+      <div class="how-item"><div class="how-num">2</div><div class="how-title">Set Guest Count</div><div class="how-desc">Catering and invitation costs scale with the number of guests you invite.</div></div>
+      <div class="how-item"><div class="how-num">3</div><div class="how-title">Adjust Sliders</div><div class="how-desc">Move each category slider to match your planned spend. Benchmarks guide you.</div></div>
+      <div class="how-item"><div class="how-num">4</div><div class="how-title">Export or Share</div><div class="how-desc">Download a PDF or copy a share link to plan with your family.</div></div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="card">
+    <div class="card-title">Frequently Asked Questions</div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">How much does an Indian wedding cost in 2025?</button><div class="faq-a">The average Indian wedding cost in 2025 ranges from ₹5 lakhs for a small intimate ceremony to ₹1 crore+ for a large destination wedding. North Indian weddings average ₹15–50 lakhs, South Indian ₹8–25 lakhs, West Indian ₹10–35 lakhs, and East Indian ₹6–20 lakhs for 200–500 guests.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What are the biggest expenses in an Indian wedding?</button><div class="faq-a">Catering is typically the largest cost at 30–40% of budget, followed by Venue (15–25%), Decoration (10–15%), and Photography &amp; Video (8–12%). Jewellery can dominate the budget in South Indian weddings. Bridal wear and DJ/Band are significant in North Indian celebrations.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">How much does wedding catering cost per head in India?</button><div class="faq-a">Indian wedding catering costs per head vary by region: North India ₹800–2,500/head, South India ₹500–1,500/head, West India ₹700–2,000/head, East India ₹400–1,200/head. A vegetarian menu costs less; multi-cuisine live counters cost significantly more.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">How can I reduce my Indian wedding budget?</button><div class="faq-a">Limit guest count (catering is your biggest variable cost), choose a weekday or off-peak date for 20–30% venue discount, combine ceremonies into fewer days, opt for a local venue over resort, hire a single multi-talented photographer, and use digital invitations instead of printed cards.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What is the difference in costs between North and South India weddings?</button><div class="faq-a">North Indian weddings (Punjab, Delhi, UP, Rajasthan) tend to cost more overall due to larger guest lists, multi-day ceremonies, and heavy decoration expectations. South Indian weddings are generally simpler in ceremony but can involve significant gold jewellery expenditure. A comparable 400-guest wedding might cost ₹30–60L in North India vs ₹15–30L in South India.</div></div>
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2025 Indian Wedding Budget Planner — Free tool, no signup required. Not financial advice.</p>
+  <p style="margin-top:0.5rem;"><a href="/privacy.html">Privacy Policy</a> <a href="/terms.html">Terms of Use</a></p>
+</footer>
+
+<script>
+// ─── DATA ───────────────────────────────────────────────────────────────────
+const BENCH = {
+  north: {
+    venue:       [200000, 1500000],
+    catering:    [1000,   3000],      // per head
+    decoration:  [100000, 500000],
+    photography: [60000,  350000],
+    djBand:      [50000,  300000],
+    bridalWear:  [60000,  500000],
+    groomWear:   [20000,  200000],
+    jewellery:   [200000, 2000000],
+    pandit:      [10000,  60000],
+    invitation:  [60,     350],       // per head
+    transport:   [30000,  200000],
+    honeymoon:   [60000,  500000],
+  },
+  south: {
+    venue:       [100000, 800000],
+    catering:    [600,    1500],
+    decoration:  [50000,  300000],
+    photography: [40000,  200000],
+    djBand:      [30000,  150000],
+    bridalWear:  [30000,  300000],
+    groomWear:   [10000,  100000],
+    jewellery:   [300000, 3000000],
+    pandit:      [15000,  60000],
+    invitation:  [30,     150],
+    transport:   [20000,  100000],
+    honeymoon:   [30000,  300000],
+  },
+  west: {
+    venue:       [150000, 1200000],
+    catering:    [800,    2000],
+    decoration:  [75000,  400000],
+    photography: [50000,  250000],
+    djBand:      [40000,  200000],
+    bridalWear:  [40000,  400000],
+    groomWear:   [15000,  150000],
+    jewellery:   [200000, 2500000],
+    pandit:      [10000,  45000],
+    invitation:  [40,     200],
+    transport:   [25000,  150000],
+    honeymoon:   [40000,  400000],
+  },
+  east: {
+    venue:       [80000,  600000],
+    catering:    [500,    1200],
+    decoration:  [40000,  250000],
+    photography: [30000,  150000],
+    djBand:      [25000,  120000],
+    bridalWear:  [25000,  250000],
+    groomWear:   [10000,  80000],
+    jewellery:   [150000, 1500000],
+    pandit:      [8000,   35000],
+    invitation:  [25,     120],
+    transport:   [15000,  80000],
+    honeymoon:   [25000,  250000],
+  }
+};
+
+const CATS = [
+  { key: 'venue',       label: 'Venue',                icon: '🏛️', max: 3000000, perHead: false },
+  { key: 'catering',    label: 'Catering',             icon: '🍽️', max: 8000000, perHead: true  },
+  { key: 'decoration',  label: 'Decoration',           icon: '💐', max: 2000000, perHead: false },
+  { key: 'photography', label: 'Photography & Video',  icon: '📸', max: 1000000, perHead: false },
+  { key: 'djBand',      label: 'DJ / Band / Music',    icon: '🎵', max: 1000000, perHead: false },
+  { key: 'bridalWear',  label: 'Bridal Wear',          icon: '👗', max: 2000000, perHead: false },
+  { key: 'groomWear',   label: 'Groom Wear',           icon: '🤵', max: 500000,  perHead: false },
+  { key: 'jewellery',   label: 'Jewellery',            icon: '💍', max: 5000000, perHead: false },
+  { key: 'pandit',      label: 'Pandit / Priest',      icon: '🪔', max: 200000,  perHead: false },
+  { key: 'invitation',  label: 'Invitation Cards',     icon: '✉️', max: 500000,  perHead: true  },
+  { key: 'transport',   label: 'Transport',            icon: '🚗', max: 1000000, perHead: false },
+  { key: 'honeymoon',   label: 'Honeymoon',            icon: '✈️', max: 2000000, perHead: false },
+];
+
+const COLORS = [
+  '#8B1A4A','#C9912A','#2E7D52','#1565C0','#6A1B9A',
+  '#BF360C','#00695C','#AD1457','#4E342E','#283593','#558B2F','#F57F17'
+];
+
+// ─── STATE ───────────────────────────────────────────────────────────────────
+let region = 'north';
+let guests = 300;
+let values = {};
+let chart = null;
+
+// ─── HELPERS ─────────────────────────────────────────────────────────────────
+function avg(arr) { return Math.round((arr[0] + arr[1]) / 2); }
+
+function benchmarkFor(key, g) {
+  const d = BENCH[region][key];
+  const cat = CATS.find(c => c.key === key);
+  return cat.perHead ? Math.round(avg(d) * g) : avg(d);
+}
+
+function fmt(n) {
+  if (n === 0) return '₹0';
+  if (n >= 10000000) return '₹' + (n / 10000000).toFixed(1) + 'Cr';
+  if (n >= 100000)   return '₹' + (n / 100000).toFixed(1) + 'L';
+  if (n >= 1000)     return '₹' + (n / 1000).toFixed(1) + 'K';
+  return '₹' + n;
+}
+
+function fmtFull(n) {
+  return '₹' + n.toLocaleString('en-IN');
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+function init() {
+  CATS.forEach(c => { values[c.key] = benchmarkFor(c.key, guests); });
+  renderSliders();
+  updateAll();
+  loadFromHash();
+}
+
+// ─── REGION ──────────────────────────────────────────────────────────────────
+function setRegion(r, el) {
+  region = r;
+  document.querySelectorAll('.region-btn').forEach(b => b.classList.remove('active'));
+  if (el) el.classList.add('active');
+  CATS.forEach(c => { values[c.key] = benchmarkFor(c.key, guests); });
+  updateSliderPositions();
+  updateAll();
+}
+
+// ─── GUEST ────────────────────────────────────────────────────────────────────
+function onGuestChange(v) {
+  guests = parseInt(v, 10);
+  const el = document.getElementById('guestDisplay');
+  if (el) el.textContent = guests.toLocaleString('en-IN');
+  CATS.filter(c => c.perHead).forEach(c => {
+    values[c.key] = benchmarkFor(c.key, guests);
+  });
+  updateSliderPositions();
+  updateAll();
+}
+
+// ─── CEREMONY TOGGLE ─────────────────────────────────────────────────────────
+function toggleCeremony(cb) {
+  const item = cb.closest('.ceremony-item');
+  if (item) item.classList.toggle('checked', cb.checked);
+}
+
+// ─── SLIDERS ─────────────────────────────────────────────────────────────────
+function renderSliders() {
+  const container = document.getElementById('categorySliders');
+  if (!container) return;
+  container.innerHTML = CATS.map((c, i) => {
+    const bench = benchmarkFor(c.key, guests);
+    const val = values[c.key];
+    return `
+    <div class="cat-row" id="row-${c.key}">
+      <div class="cat-header">
+        <div class="cat-name"><span class="cat-icon">${c.icon}</span>${c.label}</div>
+        <div class="cat-amount" id="amt-${c.key}">${fmt(val)}</div>
+      </div>
+      <div class="cat-bench">Avg for your region: <span id="bench-${c.key}">${fmt(bench)}</span>${c.perHead ? ' (scales with guest count)' : ''}</div>
+      <input type="range" class="cat-slider" id="slider-${c.key}"
+        min="0" max="${c.max}" step="5000" value="${val}"
+        oninput="onSlider('${c.key}', this.value)"
+        style="--pct:${Math.round(val/c.max*100)}%">
+    </div>`;
+  }).join('');
+  styleSliders();
+}
+
+function styleSliders() {
+  CATS.forEach(c => {
+    const el = document.getElementById(`slider-${c.key}`);
+    if (!el) return;
+    const pct = (values[c.key] / c.max * 100).toFixed(1);
+    el.style.background = `linear-gradient(to right, var(--primary) ${pct}%, var(--border) ${pct}%)`;
+  });
+}
+
+function onSlider(key, v) {
+  values[key] = parseInt(v, 10);
+  const amtEl = document.getElementById(`amt-${key}`);
+  if (amtEl) amtEl.textContent = fmt(values[key]);
+  const el = document.getElementById(`slider-${key}`);
+  if (el) {
+    const cat = CATS.find(c => c.key === key);
+    const pct = (values[key] / cat.max * 100).toFixed(1);
+    el.style.background = `linear-gradient(to right, var(--primary) ${pct}%, var(--border) ${pct}%)`;
+  }
+  updateAll();
+}
+
+function updateSliderPositions() {
+  CATS.forEach(c => {
+    const el = document.getElementById(`slider-${c.key}`);
+    if (el) el.value = values[c.key];
+    const amtEl = document.getElementById(`amt-${c.key}`);
+    if (amtEl) amtEl.textContent = fmt(values[c.key]);
+    const benchEl = document.getElementById(`bench-${c.key}`);
+    if (benchEl) benchEl.textContent = fmt(benchmarkFor(c.key, guests));
+  });
+  styleSliders();
+}
+
+// ─── UPDATE ALL ───────────────────────────────────────────────────────────────
+function updateAll() {
+  const total = CATS.reduce((s, c) => s + values[c.key], 0);
+  const benchTotalVal = CATS.reduce((s, c) => s + benchmarkFor(c.key, guests), 0);
+  const nonZero = CATS.filter(c => values[c.key] > 0).length;
+
+  const tEl = document.getElementById('totalDisplay');
+  if (tEl) tEl.textContent = fmtFull(total);
+  const tsEl = document.getElementById('totalSub');
+  if (tsEl) tsEl.textContent = `${nonZero} of ${CATS.length} categories allocated`;
+  const btEl = document.getElementById('benchTotal');
+  if (btEl) btEl.textContent = fmtFull(benchTotalVal);
+  const bdEl = document.getElementById('benchDiff');
+  if (bdEl) {
+    const diff = total - benchTotalVal;
+    if (diff > 0) bdEl.textContent = `↑ ${fmt(Math.abs(diff))} above average`;
+    else if (diff < 0) bdEl.textContent = `↓ ${fmt(Math.abs(diff))} below average`;
+    else bdEl.textContent = 'Matches regional average';
+  }
+
+  updateChart(total);
+  updateCompare(benchTotalVal);
+}
+
+// ─── CHART ───────────────────────────────────────────────────────────────────
+function updateChart(total) {
+  const active = CATS.filter(c => values[c.key] > 0);
+  const data = active.map(c => values[c.key]);
+  const labels = active.map(c => c.label);
+  const colors = active.map((_, i) => COLORS[i % COLORS.length]);
+
+  const ctx = document.getElementById('donutChart');
+  if (!ctx) return;
+
+  if (chart) {
+    chart.data.labels = labels;
+    chart.data.datasets[0].data = data;
+    chart.data.datasets[0].backgroundColor = colors;
+    chart.update();
+  } else {
+    chart = new Chart(ctx, {
+      type: 'doughnut',
+      data: { labels, datasets: [{ data, backgroundColor: colors, borderWidth: 2, borderColor: '#fff' }] },
+      options: {
+        cutout: '60%',
+        plugins: { legend: { display: false }, tooltip: {
+          callbacks: { label: ctx => ` ${ctx.label}: ${fmt(ctx.raw)} (${((ctx.raw/total)*100).toFixed(1)}%)` }
+        }},
+        animation: { duration: 300 }
+      }
+    });
+  }
+
+  const legendEl = document.getElementById('chartLegend');
+  if (legendEl) {
+    legendEl.innerHTML = active.map((c, i) => `
+      <div class="legend-row">
+        <div class="legend-dot" style="background:${colors[i]}"></div>
+        <span class="legend-name">${c.label}</span>
+        <span class="legend-pct">${total > 0 ? ((values[c.key]/total)*100).toFixed(1) : 0}%</span>
+      </div>`).join('');
+  }
+}
+
+// ─── COMPARE ─────────────────────────────────────────────────────────────────
+function updateCompare(benchTotalVal) {
+  const body = document.getElementById('compareBody');
+  if (!body) return;
+  const total = CATS.reduce((s, c) => s + values[c.key], 0);
+  let rows = CATS.map(c => {
+    const b = benchmarkFor(c.key, guests);
+    const v = values[c.key];
+    const diff = v - b;
+    let chip = '';
+    if (b > 0) {
+      const pct = Math.round((diff / b) * 100);
+      if (Math.abs(pct) < 10) chip = `<span class="diff-chip diff-on">~avg</span>`;
+      else if (pct > 0) chip = `<span class="diff-chip diff-over">+${pct}%</span>`;
+      else chip = `<span class="diff-chip diff-under">${pct}%</span>`;
+    }
+    return `<tr><td>${c.icon} ${c.label}</td><td>${fmt(v)}</td><td>${fmt(b)}</td><td>${chip}</td></tr>`;
+  }).join('');
+  rows += `<tr><td>TOTAL</td><td>${fmt(total)}</td><td>${fmt(benchTotalVal)}</td><td></td></tr>`;
+  body.innerHTML = rows;
+}
+
+// ─── FAQ ─────────────────────────────────────────────────────────────────────
+function toggleFaq(btn) {
+  const ans = btn.nextElementSibling;
+  const isOpen = btn.classList.contains('open');
+  document.querySelectorAll('.faq-q.open').forEach(b => { b.classList.remove('open'); b.nextElementSibling.classList.remove('open'); });
+  if (!isOpen) { btn.classList.add('open'); ans.classList.add('open'); }
+}
+
+// ─── PDF EXPORT ──────────────────────────────────────────────────────────────
+function exportPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+  const total = CATS.reduce((s, c) => s + values[c.key], 0);
+  const benchTotal = CATS.reduce((s, c) => s + benchmarkFor(c.key, guests), 0);
+
+  doc.setFillColor(139, 26, 74);
+  doc.rect(0, 0, 210, 35, 'F');
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(20);
+  doc.setFont(undefined, 'bold');
+  doc.text('Indian Wedding Budget Plan', 105, 14, { align: 'center' });
+  doc.setFontSize(10);
+  doc.setFont(undefined, 'normal');
+  doc.text(`Region: ${region.charAt(0).toUpperCase() + region.slice(1)} India  |  Guests: ${guests}  |  Generated ${new Date().toLocaleDateString('en-IN')}`, 105, 24, { align: 'center' });
+
+  doc.setTextColor(30, 30, 30);
+  doc.setFontSize(14);
+  doc.setFont(undefined, 'bold');
+  doc.text('Total Budget: ' + fmtFull(total), 15, 48);
+  doc.setFontSize(11);
+  doc.setFont(undefined, 'normal');
+  doc.setTextColor(100, 100, 100);
+  doc.text('Regional benchmark: ' + fmtFull(benchTotal), 15, 56);
+
+  let y = 68;
+  doc.setFontSize(9);
+  doc.setFont(undefined, 'bold');
+  doc.setTextColor(30, 30, 30);
+  doc.text('Category', 15, y);
+  doc.text('Your Budget', 110, y);
+  doc.text('Avg Benchmark', 155, y);
+  doc.line(15, y + 2, 195, y + 2);
+  y += 9;
+  doc.setFont(undefined, 'normal');
+  CATS.forEach(c => {
+    doc.setTextColor(30, 30, 30);
+    doc.text(c.label, 15, y);
+    doc.text(fmtFull(values[c.key]), 110, y);
+    doc.text(fmtFull(benchmarkFor(c.key, guests)), 155, y);
+    doc.setDrawColor(230, 220, 225);
+    doc.line(15, y + 2, 195, y + 2);
+    y += 9;
+    if (y > 270) { doc.addPage(); y = 20; }
+  });
+
+  y += 4;
+  doc.setFillColor(139, 26, 74);
+  doc.rect(15, y, 180, 10, 'F');
+  doc.setTextColor(255, 255, 255);
+  doc.setFont(undefined, 'bold');
+  doc.text('TOTAL', 20, y + 7);
+  doc.text(fmtFull(total), 110, y + 7);
+  doc.text(fmtFull(benchTotal), 155, y + 7);
+
+  doc.setTextColor(150, 150, 150);
+  doc.setFontSize(8);
+  doc.setFont(undefined, 'normal');
+  doc.text('Generated by indian-wedding-budget.vercel.app — Benchmarks are estimates. Consult vendors for exact quotes.', 105, 290, { align: 'center' });
+
+  doc.save('indian-wedding-budget.pdf');
+}
+
+// ─── SHARE LINK ───────────────────────────────────────────────────────────────
+function generateShareLink() {
+  const state = { region, guests, values };
+  const encoded = btoa(JSON.stringify(state));
+  const url = window.location.href.split('#')[0] + '#' + encoded;
+  const el = document.getElementById('shareUrl');
+  if (el) {
+    el.value = url;
+    el.select();
+    navigator.clipboard.writeText(url).then(() => {
+      el.value = '✅ Copied! ' + url;
+      setTimeout(() => { el.value = url; }, 2500);
+    }).catch(() => {});
+  }
+}
+
+function loadFromHash() {
+  const hash = window.location.hash.slice(1);
+  if (!hash) return;
+  try {
+    const state = JSON.parse(atob(hash));
+    if (!state.region || !state.guests || !state.values) return;
+    region = state.region;
+    guests = state.guests;
+    values = state.values;
+
+    const gSlider = document.getElementById('guestSlider');
+    if (gSlider) gSlider.value = guests;
+    const gDisplay = document.getElementById('guestDisplay');
+    if (gDisplay) gDisplay.textContent = guests.toLocaleString('en-IN');
+
+    document.querySelectorAll('.region-btn').forEach(b => b.classList.remove('active'));
+    const rb = document.querySelector(`[data-region="${region}"]`);
+    if (rb) rb.classList.add('active');
+
+    updateSliderPositions();
+    updateAll();
+  } catch(e) {}
+}
+
+// ─── RESET ────────────────────────────────────────────────────────────────────
+function resetAll() {
+  region = 'north';
+  guests = 300;
+  CATS.forEach(c => { values[c.key] = benchmarkFor(c.key, guests); });
+  document.querySelectorAll('.region-btn').forEach(b => b.classList.remove('active'));
+  const nb = document.querySelector('[data-region="north"]');
+  if (nb) nb.classList.add('active');
+  const gs = document.getElementById('guestSlider');
+  if (gs) gs.value = 300;
+  const gd = document.getElementById('guestDisplay');
+  if (gd) gd.textContent = '300';
+  updateSliderPositions();
+  updateAll();
+  window.location.hash = '';
+}
+
+// ─── START ────────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
